@@ -29,6 +29,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configure(http))  // 🔥 CORS 활성화 추가
                 .csrf(csrf -> csrf.disable())  // CSRF 보안 해제 (API 요청 필요)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()  // 회원가입 & 로그인 허용
@@ -39,4 +40,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }
