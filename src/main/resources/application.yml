@@ -25,8 +25,8 @@ spring:
       max-request-size: 10MB
 
 jwt:
-  secret: 0222
-  expiration: 86400000 # 1일
+  secret: MY_SUPER_SECRET_KEY_FOR_JWT  # 실제 배포 시에는 환경 변수 사용
+  expiration: 86400000  # 1일 (24시간)
 
 server:
   port: 8080
