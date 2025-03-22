@@ -1,5 +1,6 @@
 package zaldo.goods.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,7 +36,9 @@ public class Product {
     // 🔗 카테고리 연결 (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;
