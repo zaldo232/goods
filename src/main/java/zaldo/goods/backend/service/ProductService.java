@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.repository.ProductRepository;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -17,4 +18,9 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
 }

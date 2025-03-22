@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";  // 메인 페이지 (구현 예정)
 import SignupPage from "./pages/SignupPage";
 import MyPage from "./pages/MyPage";
 import ProductsPage from "./pages/ProductsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/products" element={<ProductsPage />} /> f
+                <Route path="/products/:id" element={<ProductDetailPage />} />
             </Routes>
         </Router>
     );

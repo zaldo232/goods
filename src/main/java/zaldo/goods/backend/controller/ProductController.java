@@ -21,4 +21,12 @@ public class ProductController {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getProductById(@PathVariable Long id) {
+        return productService.getProductById(id)
+                .<ResponseEntity<Object>>map(product -> ResponseEntity.ok(product))
+                .orElse(ResponseEntity.status(404).body("상품을 찾을 수 없습니다."));
+    }
+    
 }

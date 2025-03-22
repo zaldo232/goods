@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // ✅ 추가
 import api from "../api/api";
 
 const ProductsPage = () => {
@@ -23,7 +24,15 @@ const ProductsPage = () => {
                     >
                         <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
                         <p className="text-sm text-gray-600 mb-2">{product.description}</p>
-                        <p className="font-bold text-blue-600">{product.price}원</p>
+                        <p className="font-bold text-blue-600 mb-4">{product.price}원</p>
+
+                        {/* ✅ 상세보기 링크 추가 */}
+                        <Link
+                            to={`/products/${product.productId}`}
+                            className="text-sm text-white bg-blue-500 px-3 py-1 rounded hover:bg-blue-600"
+                        >
+                            상세보기
+                        </Link>
                     </div>
                 ))}
             </div>
