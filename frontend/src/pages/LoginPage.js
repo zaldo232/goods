@@ -63,7 +63,15 @@ const LoginPage = () => {
                     >
                         로그인
                     </button>
+                    <button
+                        type="button"
+                        onClick={() => navigate("/signup")}
+                        className="mt-2 w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 transition"
+                    >
+                        회원가입
+                    </button>
                 </form>
+
             </div>
         </div>
     );
