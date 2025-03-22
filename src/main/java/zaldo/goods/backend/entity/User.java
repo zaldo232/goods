@@ -3,6 +3,7 @@ package zaldo.goods.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import zaldo.goods.backend.enums.SocialType;
 
 import java.time.LocalDateTime;
 
@@ -38,9 +39,5 @@ public class User {
 
     public void encodePassword(BCryptPasswordEncoder encoder) {
         this.password = encoder.encode(this.password);
-    }
-
-    public enum SocialType {
-        NONE, KAKAO, NAVER
     }
 }
