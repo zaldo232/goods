@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()  // 회원가입 & 로그인 허용
                         .requestMatchers("/api/user/me").authenticated()  // 🔥 인증 필요!
+                        .requestMatchers("/api/user/change-password").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
