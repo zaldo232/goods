@@ -59,4 +59,19 @@ public class UserController {
 
         return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {
+        String jwt = token.substring(7);
+        String username = jwtUtil.extractUsername(jwt);
+
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(404).body("사용자를 찾을 수 없습니다.");
+        }
+
+        userRepository.delete(userOptional.get());
+        return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
+    }
+
 }

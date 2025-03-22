@@ -49,6 +49,21 @@ const MyPage = () => {
         }
     };
 
+    const handleDeleteAccount = async () => {
+        const confirm = window.confirm("정말로 회원 탈퇴하시겠습니까?");
+        if (!confirm) return;
+
+        try {
+            await api.delete("/api/user/delete");
+            alert("회원 탈퇴가 완료되었습니다.");
+            logout(); // 토큰 제거
+            navigate("/login"); // 로그인 페이지로 이동
+        } catch (err) {
+            console.error(err);
+            alert("회원 탈퇴에 실패했습니다.");
+        }
+    };
+
     if (loading) return <div className="p-4">불러오는 중...</div>;
 
     return (
@@ -84,6 +99,13 @@ const MyPage = () => {
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full"
                 >
                     비밀번호 변경
+                </button>
+                {/*회원 탈퇴 버튼*/}
+                <button
+                    onClick={handleDeleteAccount}
+                    className="bg-red-500 text-white px-4 py-2 mt-2 rounded hover:bg-red-600 transition w-full"
+                >
+                    회원 탈퇴
                 </button>
 
                 {showChangePw && (
