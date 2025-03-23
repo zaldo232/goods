@@ -10,7 +10,7 @@ const ProductDetailPage = () => {
         const token = localStorage.getItem("jwt");
         if (!token) {
             alert("로그인이 필요합니다.");
-            window.location.href = "/login"; // 또는 navigate("/login")
+            window.location.href = "/login";
             return;
         }
 
@@ -27,11 +27,33 @@ const ProductDetailPage = () => {
                 console.error("상품 상세 오류:", err);
                 if (err.response?.status === 401) {
                     alert("토큰이 유효하지 않아요. 다시 로그인해주세요.");
-                    localStorage.removeItem("token");
+                    localStorage.removeItem("jwt");
                     window.location.href = "/login";
                 }
             });
     }, [id]);
+
+    const handleAddToCart = async () => {
+        const token = localStorage.getItem("jwt");
+        try {
+            await axios.post(
+                "http://localhost:8080/api/cart/add",
+                {
+                    productId: product.productId,
+                    quantity: 1, // 기본 수량 1개
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            alert("장바구니에 담았습니다!");
+        } catch (err) {
+            console.error("장바구니 담기 실패:", err);
+            alert("장바구니 담기에 실패했습니다.");
+        }
+    };
 
     if (!product) return <div>불러오는 중...</div>;
 
@@ -41,7 +63,7 @@ const ProductDetailPage = () => {
             <p>{product.description}</p>
             <p>가격: {product.price.toLocaleString()}원</p>
             <p>재고: {product.stock}개</p>
-            <button>장바구니 담기</button>
+            <button onClick={handleAddToCart}>장바구니 담기</button>
         </div>
     );
 };
