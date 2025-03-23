@@ -6,6 +6,7 @@ import SignupPage from "./pages/SignupPage";
 import MyPage from "./pages/MyPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import CartPage from "./pages/CartPage"; // 폴더 구조에 맞게 경로 수정!
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/products" element={<ProductsPage />} /> f
                 <Route path="/products/:id" element={<ProductDetailPage />} />
+                <Route path="/cart" element={<CartPage />} />
             </Routes>
         </Router>
     );
