@@ -64,10 +64,29 @@ const CartPage = () => {
         }
     };
 
-    const handleOrder = () => {
-        alert("주문하기 기능은 아직 준비 중입니다!");
-        // 👉 주문 API 만들면 여기에 연결!
+    const handleOrder = async () => {
+        const token = localStorage.getItem("jwt");
+        try {
+            await axios.post(
+                "http://localhost:8080/api/orders",
+                {
+                    paymentMethod: "CARD", // 기본값: 카드 결제 (나중에 선택지로 확장 가능)
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            alert("주문이 완료되었습니다!");
+            window.location.href = "/"; // 또는 navigate("/")로 홈으로 이동
+        } catch (err) {
+            console.error("주문 실패:", err);
+            alert("주문에 실패했습니다.");
+        }
     };
+
 
     const totalPrice = cartItems.reduce(
         (sum, item) => sum + item.totalPrice,
