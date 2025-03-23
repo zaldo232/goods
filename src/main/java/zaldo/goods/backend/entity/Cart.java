@@ -29,7 +29,7 @@ public class Cart {
     private Product product;
 
     @Column(nullable = false)
-    private int quantity;
+    private int quantity = 1;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
