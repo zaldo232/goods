@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import zaldo.goods.backend.config.JwtUtil;
 import zaldo.goods.backend.dto.AddToCartRequest;
 import zaldo.goods.backend.dto.CartResponseDto;
+import zaldo.goods.backend.dto.UpdateCartRequest;
 import zaldo.goods.backend.entity.Cart;
 import zaldo.goods.backend.entity.User;
 import zaldo.goods.backend.repository.UserRepository;
@@ -71,5 +72,25 @@ public class CartController {
             return ResponseEntity.status(400).body(e.getMessage());
         }
     }
+
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateCart(@RequestHeader("Authorization") String token,
+                                        @RequestBody UpdateCartRequest request) {
+        String jwt = token.substring(7);
+        String username = jwtUtil.extractUsername(jwt);
+
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(404).body("사용자를 찾을 수 없습니다.");
+        }
+
+        try {
+            cartService.updateCartItem(userOptional.get(), request);
+            return ResponseEntity.ok("장바구니 수량이 변경되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+    }
+
 
 }

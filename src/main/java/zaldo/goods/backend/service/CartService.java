@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import zaldo.goods.backend.dto.AddToCartRequest;
 import zaldo.goods.backend.dto.CartResponseDto;
+import zaldo.goods.backend.dto.UpdateCartRequest;
 import zaldo.goods.backend.entity.Cart;
 import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.entity.User;
@@ -56,6 +57,25 @@ public class CartService {
         }
         cartRepository.delete(cartItem.get());
     }
+
+    @Transactional
+    public void updateCartItem(User user, UpdateCartRequest request) {
+        Optional<Cart> cartItem = cartRepository.findByUserAndProduct(user, new Product(request.getProductId()));
+
+        if (cartItem.isEmpty()) {
+            throw new IllegalArgumentException("장바구니에 해당 상품이 없습니다.");
+        }
+
+        Cart cart = cartItem.get();
+        int newQty = request.getQuantity();
+
+        if (newQty <= 0) {
+            cartRepository.delete(cart);
+        } else {
+            cart.setQuantity(newQty);
+        }
+    }
+
 
 
 }
