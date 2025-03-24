@@ -204,6 +204,26 @@ const ProductDetailPage = () => {
 
     return (
         <div style={{ padding: "20px" }}>
+            {/* ✅ 이미지 표시 */}
+            {product.images && product.images.length > 0 && (
+                <div style={{ marginBottom: "20px", display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                    {product.images.map((image, index) => (
+                        <img
+                            key={index}
+                            src={`http://localhost:8080${image.imageUrl}`}
+                            alt={`product-${index}`}
+                            style={{
+                                width: "300px",
+                                height: "300px",
+                                objectFit: "cover",
+                                borderRadius: "10px",
+                                boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                            }}
+                        />
+                    ))}
+                </div>
+            )}
+
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <p>가격: {product.price.toLocaleString()}원</p>
