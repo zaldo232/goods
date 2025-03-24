@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zaldo.goods.backend.config.JwtUtil;
 import zaldo.goods.backend.dto.CreateOrderRequest;
+import zaldo.goods.backend.dto.OrderItemResponseDto;
 import zaldo.goods.backend.dto.OrderResponseDto;
 import zaldo.goods.backend.entity.User;
 import zaldo.goods.backend.repository.UserRepository;
@@ -54,5 +55,12 @@ public class OrderController {
         List<OrderResponseDto> orders = orderService.getOrders(userOptional.get());
         return ResponseEntity.ok(orders);
     }
+
+    @GetMapping("/{orderId}/items")
+    public ResponseEntity<?> getOrderItems(@PathVariable Long orderId) {
+        List<OrderItemResponseDto> items = orderService.getOrderItems(orderId);
+        return ResponseEntity.ok(items);
+    }
+
 
 }

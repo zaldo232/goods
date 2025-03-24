@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import zaldo.goods.backend.dto.CreateOrderRequest;
+import zaldo.goods.backend.dto.OrderItemResponseDto;
 import zaldo.goods.backend.dto.OrderResponseDto;
 import zaldo.goods.backend.entity.*;
 import zaldo.goods.backend.enums.OrderStatus;
@@ -63,5 +64,15 @@ public class OrderService {
                 .map(OrderResponseDto::fromEntity)
                 .toList();
     }
+
+    @Transactional
+    public List<OrderItemResponseDto> getOrderItems(Long orderId) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrder_OrderId(orderId);
+
+        return orderItems.stream()
+                .map(OrderItemResponseDto::fromEntity)
+                .toList();
+    }
+
 
 }

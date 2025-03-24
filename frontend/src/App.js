@@ -8,6 +8,7 @@ import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage"; // 폴더 구조에 맞게 경로 수정!
 import OrdersPage from "./pages/OrdersPage";
+import OrdersDetailPage from "./pages/OrdersDetailPage";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/products/:id" element={<ProductDetailPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/orders/:id" element={<OrdersDetailPage />} />
             </Routes>
         </Router>
     );
