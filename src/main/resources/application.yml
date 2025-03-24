@@ -30,3 +30,6 @@ jwt:
 
 server:
   port: 8080
+
+file:
+  upload-dir: src/main/resources/static/uploads
