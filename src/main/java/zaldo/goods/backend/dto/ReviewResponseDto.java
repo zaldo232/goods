@@ -1,5 +1,6 @@
 package zaldo.goods.backend.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import zaldo.goods.backend.entity.Review;
@@ -8,7 +9,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class ReviewResponseDto {
+    private Long reviewId;
     private String username;
     private int rating;
     private String content;
@@ -16,6 +19,7 @@ public class ReviewResponseDto {
 
     public static ReviewResponseDto fromEntity(Review review) {
         return ReviewResponseDto.builder()
+                .reviewId(review.getReviewId()) // <-- 꼭 추가
                 .username(review.getUser().getUsername())
                 .rating(review.getRating())
                 .content(review.getContent())
@@ -23,3 +27,4 @@ public class ReviewResponseDto {
                 .build();
     }
 }
+

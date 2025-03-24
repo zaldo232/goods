@@ -62,5 +62,32 @@ public class ReviewService {
                 .toList();
     }
 
+    @Transactional
+    public void deleteReview(User user, Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+
+        // 작성자 본인만 삭제 가능
+        if (!review.getUser().getUserId().equals(user.getUserId())) {
+            throw new IllegalArgumentException("본인이 작성한 리뷰만 삭제할 수 있습니다.");
+        }
+
+        reviewRepository.delete(review);
+    }
+
+    @Transactional
+    public void updateReview(User user, Long reviewId, ReviewRequestDto request) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+
+        if (!review.getUser().getUserId().equals(user.getUserId())) {
+            throw new IllegalArgumentException("본인이 작성한 리뷰만 수정할 수 있습니다.");
+        }
+
+        review.setRating(request.getRating());
+        review.setContent(request.getContent());
+        // updatedAt이 있다면 자동 업데이트 되도록 설정해도 OK
+    }
+
 
 }
