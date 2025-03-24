@@ -12,6 +12,7 @@ const ProductDetailPage = () => {
     const [editReviewId, setEditReviewId] = useState(null);
     const [editContent, setEditContent] = useState("");
     const [editRating, setEditRating] = useState(5);
+    const [isWished, setIsWished] = useState(false);
 
     const fetchReviews = async () => {
         try {
@@ -31,6 +32,19 @@ const ProductDetailPage = () => {
             setCurrentUser(res.data.username);
         } catch (err) {
             console.error("유저 정보 불러오기 실패:", err);
+        }
+    };
+
+    const checkWishlist = async () => {
+        const token = localStorage.getItem("jwt");
+        try {
+            const res = await axios.get("http://localhost:8080/api/wishlist", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const wished = res.data.some((item) => item.productId === parseInt(id));
+            setIsWished(wished);
+        } catch (err) {
+            console.error("위시리스트 확인 실패:", err);
         }
     };
 
@@ -54,6 +68,7 @@ const ProductDetailPage = () => {
 
         fetchReviews();
         fetchCurrentUser();
+        checkWishlist();
     }, [id]);
 
     const handleAddToCart = async () => {
@@ -75,6 +90,30 @@ const ProductDetailPage = () => {
         } catch (err) {
             console.error("장바구니 담기 실패:", err);
             alert("장바구니 담기에 실패했습니다.");
+        }
+    };
+
+    const toggleWishlist = async () => {
+        const token = localStorage.getItem("jwt");
+        try {
+            if (isWished) {
+                await axios.delete(`http://localhost:8080/api/wishlist/${product.productId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setIsWished(false);
+            } else {
+                await axios.post(
+                    "http://localhost:8080/api/wishlist/add",
+                    { productId: product.productId },
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                setIsWished(true);
+            }
+        } catch (err) {
+            console.error("찜 처리 실패:", err);
+            alert("찜 기능 처리 중 오류가 발생했습니다.");
         }
     };
 
@@ -170,6 +209,9 @@ const ProductDetailPage = () => {
             <p>가격: {product.price.toLocaleString()}원</p>
             <p>재고: {product.stock}개</p>
             <button onClick={handleAddToCart}>장바구니 담기</button>
+            <button onClick={toggleWishlist} style={{ marginLeft: "10px" }}>
+                {isWished ? "❤️ 찜취소" : "🤍 찜하기"}
+            </button>
 
             <hr />
             <h3>📝 리뷰</h3>
