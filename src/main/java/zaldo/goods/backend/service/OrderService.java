@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import zaldo.goods.backend.dto.CreateOrderRequest;
+import zaldo.goods.backend.dto.OrderResponseDto;
 import zaldo.goods.backend.entity.*;
 import zaldo.goods.backend.enums.OrderStatus;
 import zaldo.goods.backend.repository.*;
@@ -53,4 +54,14 @@ public class OrderService {
         // 장바구니 비우기
         cartRepository.deleteAll(cartItems);
     }
+
+    @Transactional
+    public List<OrderResponseDto> getOrders(User user) {
+        List<Order> orders = orderRepository.findByUser(user);
+
+        return orders.stream()
+                .map(OrderResponseDto::fromEntity)
+                .toList();
+    }
+
 }
