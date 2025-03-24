@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/me").authenticated()  // 🔥 인증 필요!
                         .requestMatchers("/api/user/change-password").authenticated()
                         .requestMatchers("/api/user/delete").authenticated()
+                        .requestMatchers("/api/reviews/product/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
