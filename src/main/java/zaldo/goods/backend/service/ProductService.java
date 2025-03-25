@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import zaldo.goods.backend.dto.ProductCreateRequest;
+import zaldo.goods.backend.dto.ProductUpdateRequest;
 import zaldo.goods.backend.entity.Category;
 import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.entity.ProductImage;
@@ -57,4 +58,29 @@ public class ProductService {
             productImageRepository.save(productImage);
         }
     }
+
+    // 관리자
+    public void updateProduct(Long id, ProductUpdateRequest request) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
+
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setStock(request.getStock());
+
+        // 카테고리 변경
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("카테고리를 찾을 수 없습니다."));
+        product.setCategory(category);
+
+        productRepository.save(product);
+    }
+
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
+        productRepository.delete(product);
+    }
+
 }

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zaldo.goods.backend.dto.AdminLoginRequest;
 import zaldo.goods.backend.dto.AdminSignupRequest;
+import zaldo.goods.backend.dto.ProductUpdateRequest;
 import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.service.AdminService;
 import zaldo.goods.backend.service.ProductService;
@@ -45,6 +46,23 @@ public class AdminController {
     public ResponseEntity<List<Product>> getAllProductsForAdmin() {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
+    }
+
+    // 📁 AdminController.java (하단에 추가)
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity<String> updateProduct(
+            @PathVariable Long id,
+            @RequestBody ProductUpdateRequest request
+    ) {
+        productService.updateProduct(id, request);
+        return ResponseEntity.ok("상품 수정 완료!");
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok("상품 삭제 완료!");
     }
 
 }
