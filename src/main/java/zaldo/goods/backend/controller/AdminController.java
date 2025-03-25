@@ -9,6 +9,8 @@ import zaldo.goods.backend.dto.ProductUpdateRequest;
 import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.service.AdminService;
 import zaldo.goods.backend.service.ProductService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -64,5 +66,25 @@ public class AdminController {
         productService.deleteProduct(id);
         return ResponseEntity.ok("상품 삭제 완료!");
     }
+
+    @PutMapping(value = "/products/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<String> updateProductWithImages(
+            @PathVariable Long id,
+            @RequestPart("product") String productJson,
+            @RequestPart(value = "images", required = false) List<MultipartFile> newImages
+    ) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProductUpdateRequest productDto = objectMapper.readValue(productJson, ProductUpdateRequest.class);
+
+            productService.updateProductWithImages(id, productDto, newImages);
+            return ResponseEntity.ok("이미지를 포함한 상품 수정 완료!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("상품 수정 실패");
+        }
+    }
+
+
 
 }

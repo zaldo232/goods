@@ -12,6 +12,7 @@ import zaldo.goods.backend.repository.CategoryRepository;
 import zaldo.goods.backend.repository.ProductImageRepository;
 import zaldo.goods.backend.repository.ProductRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,5 +83,43 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
         productRepository.delete(product);
     }
+
+    public void updateProductWithImages(Long productId, ProductUpdateRequest request, List<MultipartFile> newImages) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
+
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setStock(request.getStock());
+
+        if (request.getCategoryId() != null) {
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없습니다."));
+            product.setCategory(category);
+        }
+
+        // 기존 이미지 제거
+        productImageRepository.deleteAll(product.getImages());
+        product.getImages().clear();
+
+        // 새로운 이미지 저장
+        if (newImages != null && !newImages.isEmpty()) {
+            for (MultipartFile image : newImages) {
+                try {
+                    String imageUrl = fileStorageService.saveFile(image);
+                    ProductImage productImage = new ProductImage();
+                    productImage.setProduct(product);
+                    productImage.setImageUrl(imageUrl);
+                    product.getImages().add(productImage);
+                } catch (IOException e) {
+                    throw new RuntimeException("이미지 저장 실패", e);
+                }
+            }
+        }
+
+        productRepository.save(product);
+    }
+
 
 }

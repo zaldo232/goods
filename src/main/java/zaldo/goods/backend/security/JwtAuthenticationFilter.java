@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String role = isAdmin ? "ADMIN" : "USER";
 
                 UserDetails userDetails = User.withUsername(username)
-                        .password("") // 비밀번호는 필요 없음
+                            .password("") // 비밀번호는 필요 없음
                         .roles(role)
                         .build();
 
@@ -63,6 +63,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                System.out.println("💡 JWT 필터 실행됨! 사용자: " + username + " / 역할: " + role);
+
             }
 
         } catch (ExpiredJwtException | SignatureException | MalformedJwtException e) {
