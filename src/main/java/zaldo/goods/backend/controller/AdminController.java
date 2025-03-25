@@ -5,7 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zaldo.goods.backend.dto.AdminLoginRequest;
 import zaldo.goods.backend.dto.AdminSignupRequest;
+import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.service.AdminService;
+import zaldo.goods.backend.service.ProductService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -13,6 +17,7 @@ import zaldo.goods.backend.service.AdminService;
 public class AdminController {
 
     private final AdminService adminService;
+    private final ProductService productService;
 
     // ✅ 관리자 회원가입
     @PostMapping("/signup")
@@ -35,9 +40,11 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> adminTest() {
-        return ResponseEntity.ok("✅ 관리자 전용 API 접근 성공!");
+    // 🔍 관리자 상품 목록 조회
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProductsForAdmin() {
+        List<Product> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
     }
 
 }
