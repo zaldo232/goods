@@ -37,12 +37,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/api/products/{id}").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
+                        .requestMatchers("/api/admin/signup", "/api/admin/login").permitAll()
                         .requestMatchers("/api/products/**").authenticated()
                         .requestMatchers("/api/user/me").authenticated()
                         .requestMatchers("/api/user/change-password").authenticated()
                         .requestMatchers("/api/user/delete").authenticated()
                         .requestMatchers("/api/reviews/product/**").permitAll()
                         .requestMatchers("/api/wishlist/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
