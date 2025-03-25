@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/api/products/{id}").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
-
+                        .requestMatchers("/api/categories").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN") // ✅ 관리자 권한 필요
 
                         .requestMatchers("/api/user/me").authenticated()

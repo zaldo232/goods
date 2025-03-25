@@ -51,7 +51,6 @@ public class AdminController {
     }
 
     // 📁 AdminController.java (하단에 추가)
-
     @PutMapping("/products/{id}")
     public ResponseEntity<String> updateProduct(
             @PathVariable Long id,

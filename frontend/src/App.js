@@ -10,6 +10,12 @@ import CartPage from "./pages/CartPage"; // 폴더 구조에 맞게 경로 수�
 import OrdersPage from "./pages/OrdersPage";
 import OrdersDetailPage from "./pages/OrdersDetailPage";
 import WishlistPage from "./pages/WishlistPage"
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminSignupPage from "./pages/AdminSignupPage";
+import AdminHomePage from "./pages/AdminHomePage";
+import AdminProductListPage from "./pages/AdminProductListPage";
+import AdminProductEditPage from "./pages/AdminProductEditPage";
+import AdminProductAddPage from "./pages/AdminProductAddPage";
 
 function App() {
     return (
@@ -25,6 +31,12 @@ function App() {
                 <Route path="/orders" element={<OrdersPage />} />
                 <Route path="/orders/:id" element={<OrdersDetailPage />} />
                 <Route path="/wishlist" element={<WishlistPage />} />
+                <Route path="/admin/login" element={<AdminLoginPage />} />
+                <Route path="/admin/signup" element={<AdminSignupPage />} />
+                <Route path="/admin/home" element={<AdminHomePage />} />
+                <Route path="/admin/products" element={<AdminProductListPage />} />
+                <Route path="/admin/products/edit/:id" element={<AdminProductEditPage />} />
+                <Route path="/admin/products/add" element={<AdminProductAddPage />} />
             </Routes>
         </Router>
     );
