@@ -3,6 +3,7 @@ package zaldo.goods.backend.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import zaldo.goods.backend.dto.AdminLoginRequest;
 import zaldo.goods.backend.dto.AdminSignupRequest;
 import zaldo.goods.backend.service.AdminService;
 
@@ -23,4 +24,15 @@ public class AdminController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody AdminLoginRequest request) {
+        try {
+            String token = adminService.login(request.getUsername(), request.getPassword());
+            return ResponseEntity.ok(token); // JWT 토큰 반환
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
+
 }
