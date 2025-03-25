@@ -35,4 +35,9 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<String> adminTest() {
+        return ResponseEntity.ok("✅ 관리자 전용 API 접근 성공!");
+    }
+
 }

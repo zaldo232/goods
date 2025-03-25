@@ -15,20 +15,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import zaldo.goods.backend.config.JwtUtil;
+import zaldo.goods.backend.repository.AdminRepository;
 
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final AdminRepository adminRepository;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, AdminRepository adminRepository) {
         this.jwtUtil = jwtUtil;
+        this.adminRepository = adminRepository;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (header == null || !header.startsWith("Bearer ")) {
@@ -36,12 +40,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = header.substring(7); // "Bearer " 제거
+        String token = header.substring(7);
 
         try {
             String username = jwtUtil.extractUsername(token);
+
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = User.withUsername(username).password("").roles("USER").build();
+
+                // ✅ 관리자 여부 확인
+                boolean isAdmin = adminRepository.findByUsername(username).isPresent();
+
+                String role = isAdmin ? "ADMIN" : "USER";
+
+                UserDetails userDetails = User.withUsername(username)
+                        .password("") // 비밀번호는 필요 없음
+                        .roles(role)
+                        .build();
+
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
@@ -49,6 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+
         } catch (ExpiredJwtException | SignatureException | MalformedJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid or Expired JWT Token");

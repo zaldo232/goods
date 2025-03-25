@@ -10,15 +10,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import zaldo.goods.backend.security.JwtAuthenticationFilter;
+import zaldo.goods.backend.repository.AdminRepository;
+
+import zaldo.goods.backend.repository.AdminRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
+    private final AdminRepository adminRepository;
 
-    public SecurityConfig(JwtUtil jwtUtil) {
+    public SecurityConfig(JwtUtil jwtUtil, AdminRepository adminRepository) {
         this.jwtUtil = jwtUtil;
+        this.adminRepository = adminRepository;
     }
 
     @Bean
@@ -29,27 +34,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configure(http))  // 🔥 CORS 활성화 추가
-                .csrf(csrf -> csrf.disable())  // CSRF 보안 해제 (API 요청 필요)
+                .cors(cors -> cors.configure(http))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()
+                        .requestMatchers("/api/admin/signup", "/api/admin/login").permitAll()
                         .requestMatchers("/api/products/add").permitAll()
                         .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/api/products/{id}").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
-                        .requestMatchers("/api/admin/signup", "/api/admin/login").permitAll()
-                        .requestMatchers("/api/products/**").authenticated()
+
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // ✅ 관리자 권한 필요
+
                         .requestMatchers("/api/user/me").authenticated()
                         .requestMatchers("/api/user/change-password").authenticated()
                         .requestMatchers("/api/user/delete").authenticated()
-                        .requestMatchers("/api/reviews/product/**").permitAll()
                         .requestMatchers("/api/wishlist/**").authenticated()
+                        .requestMatchers("/api/reviews/product/**").permitAll()
+                        .requestMatchers("/api/products/**").authenticated()
 
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, adminRepository), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 }
