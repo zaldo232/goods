@@ -5,9 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zaldo.goods.backend.dto.AdminLoginRequest;
 import zaldo.goods.backend.dto.AdminSignupRequest;
+import zaldo.goods.backend.dto.OrderResponseDto;
 import zaldo.goods.backend.dto.ProductUpdateRequest;
+import zaldo.goods.backend.entity.Order;
 import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.service.AdminService;
+import zaldo.goods.backend.service.OrderService;
 import zaldo.goods.backend.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +24,7 @@ public class AdminController {
 
     private final AdminService adminService;
     private final ProductService productService;
+    private final OrderService orderService;
 
     // ✅ 관리자 회원가입
     @PostMapping("/signup")
@@ -84,6 +88,15 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/orders")
+    public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
+        List<Order> orders = orderService.getAllOrders();
 
+        List<OrderResponseDto> dtos = orders.stream()
+                .map(OrderResponseDto::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
+    }
 
 }

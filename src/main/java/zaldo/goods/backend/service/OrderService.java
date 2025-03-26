@@ -74,5 +74,7 @@ public class OrderService {
                 .toList();
     }
 
-
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll(); // 전체 주문 반환
+    }
 }
