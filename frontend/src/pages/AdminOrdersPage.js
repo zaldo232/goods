@@ -1,6 +1,7 @@
 // src/pages/AdminOrdersPage.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // ✅ 링크 추가
 
 const AdminOrdersPage = () => {
     const [orders, setOrders] = useState([]);
@@ -64,7 +65,14 @@ const AdminOrdersPage = () => {
                 <tbody>
                 {orders.map(order => (
                     <tr key={order.orderId}>
-                        <td className="p-2 border">{order.orderId}</td>
+                        <td className="p-2 border">
+                            <Link
+                                to={`/admin/orders/${order.orderId}`}
+                                className="text-blue-600 hover:underline"
+                            >
+                                {order.orderId}
+                            </Link>
+                        </td>
                         <td className="p-2 border">{order.totalPrice.toLocaleString()}원</td>
                         <td className="p-2 border">{order.paymentMethod}</td>
                         <td className="p-2 border">{order.status}</td>
@@ -87,9 +95,7 @@ const AdminOrdersPage = () => {
                                 변경
                             </button>
                         </td>
-                        <td className="p-2 border">
-                            {new Date(order.createdAt).toLocaleString()}
-                        </td>
+                        <td className="p-2 border">{new Date(order.createdAt).toLocaleString()}</td>
                     </tr>
                 ))}
                 </tbody>

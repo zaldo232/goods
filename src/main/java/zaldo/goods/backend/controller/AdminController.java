@@ -3,10 +3,7 @@ package zaldo.goods.backend.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zaldo.goods.backend.dto.AdminLoginRequest;
-import zaldo.goods.backend.dto.AdminSignupRequest;
-import zaldo.goods.backend.dto.OrderResponseDto;
-import zaldo.goods.backend.dto.ProductUpdateRequest;
+import zaldo.goods.backend.dto.*;
 import zaldo.goods.backend.entity.Order;
 import zaldo.goods.backend.entity.Product;
 import zaldo.goods.backend.enums.OrderStatus;
@@ -109,5 +106,12 @@ public class AdminController {
         return ResponseEntity.ok("주문 상태가 변경되었습니다.");
     }
 
+
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> getOrderDetail(@PathVariable Long id) {
+        Order order = orderService.getOrderById(id);
+        OrderDetailDto dto = OrderDetailDto.fromEntity(order);
+        return ResponseEntity.ok(dto);
+    }
 
 }

@@ -85,4 +85,9 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public Order getOrderById(Long id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("해당 주문을 찾을 수 없습니다."));
+    }
+
 }
