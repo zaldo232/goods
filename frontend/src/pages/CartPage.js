@@ -3,6 +3,7 @@ import axios from "axios";
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState([]);
+    const [paymentMethod, setPaymentMethod] = useState("CARD"); // ✅ 추가
 
     const fetchCart = async () => {
         const token = localStorage.getItem("jwt");
@@ -39,7 +40,6 @@ const CartPage = () => {
                     },
                 }
             );
-
             fetchCart();
         } catch (err) {
             console.error("수량 변경 실패:", err);
@@ -49,14 +49,12 @@ const CartPage = () => {
 
     const handleDelete = async (productId) => {
         const token = localStorage.getItem("jwt");
-
         try {
             await axios.delete(`http://localhost:8080/api/cart/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-
             fetchCart();
         } catch (err) {
             console.error("삭제 실패:", err);
@@ -69,24 +67,20 @@ const CartPage = () => {
         try {
             await axios.post(
                 "http://localhost:8080/api/orders",
-                {
-                    paymentMethod: "CARD", // 기본값: 카드 결제 (나중에 선택지로 확장 가능)
-                },
+                { paymentMethod }, // ✅ 선택된 결제 방식 전달
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 }
             );
-
             alert("주문이 완료되었습니다!");
-            window.location.href = "/"; // 또는 navigate("/")로 홈으로 이동
+            window.location.href = "/";
         } catch (err) {
             console.error("주문 실패:", err);
             alert("주문에 실패했습니다.");
         }
     };
-
 
     const totalPrice = cartItems.reduce(
         (sum, item) => sum + item.totalPrice,
@@ -152,6 +146,22 @@ const CartPage = () => {
 
                     <hr />
                     <h3>🧾 총 결제 금액: {totalPrice.toLocaleString()}원</h3>
+
+                    {/* ✅ 결제 방식 선택 */}
+                    <div style={{ marginTop: "20px" }}>
+                        <label style={{ marginRight: "10px" }}>결제 방식:</label>
+                        <select
+                            value={paymentMethod}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            style={{ padding: "5px" }}
+                        >
+                            <option value="CARD">카드 결제</option>
+                            <option value="BANK_TRANSFER">무통장 입금</option>
+                            <option value="KAKAO_PAY">카카오페이</option>
+                            <option value="NAVER_PAY">네이버페이</option>
+                        </select>
+                    </div>
+
                     <button
                         onClick={handleOrder}
                         style={{
