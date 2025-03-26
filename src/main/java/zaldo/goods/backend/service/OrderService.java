@@ -77,4 +77,12 @@ public class OrderService {
     public List<Order> getAllOrders() {
         return orderRepository.findAll(); // 전체 주문 반환
     }
+
+    public void updateOrderStatus(Long orderId, OrderStatus status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
+
 }

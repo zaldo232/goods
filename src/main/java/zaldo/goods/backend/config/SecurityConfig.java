@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN") // ✅ 관리자 권한 필요
+                        .requestMatchers("/api/admin/orders/**").hasRole("ADMIN") // 이 줄이 포함되어야 함
 
                         .requestMatchers("/api/user/me").authenticated()
                         .requestMatchers("/api/user/change-password").authenticated()

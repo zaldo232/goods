@@ -9,6 +9,7 @@ import zaldo.goods.backend.dto.OrderResponseDto;
 import zaldo.goods.backend.dto.ProductUpdateRequest;
 import zaldo.goods.backend.entity.Order;
 import zaldo.goods.backend.entity.Product;
+import zaldo.goods.backend.enums.OrderStatus;
 import zaldo.goods.backend.service.AdminService;
 import zaldo.goods.backend.service.OrderService;
 import zaldo.goods.backend.service.ProductService;
@@ -98,5 +99,15 @@ public class AdminController {
 
         return ResponseEntity.ok(dtos);
     }
+
+    @PutMapping("/orders/{id}/status")
+    public ResponseEntity<String> updateOrderStatus(
+            @PathVariable Long id,
+            @RequestParam("status") OrderStatus status
+    ) {
+        orderService.updateOrderStatus(id, status);
+        return ResponseEntity.ok("주문 상태가 변경되었습니다.");
+    }
+
 
 }
