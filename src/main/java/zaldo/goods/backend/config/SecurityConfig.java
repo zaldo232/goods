@@ -50,6 +50,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/admin/orders/**").hasRole("ADMIN")
                         .requestMatchers("/api/notices/**").permitAll()
+                        .requestMatchers("/api/faqs/**").permitAll()
+                        .requestMatchers("/api/admin/faqs/**").hasRole("ADMIN")
 
                         .requestMatchers("/api/user/me").authenticated()
                         .requestMatchers("/api/user/change-password").authenticated()
