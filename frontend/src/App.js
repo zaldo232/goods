@@ -6,7 +6,7 @@ import SignupPage from "./pages/SignupPage";
 import MyPage from "./pages/MyPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import CartPage from "./pages/CartPage"; // 폴더 구조에 맞게 경로 수정!
+import CartPage from "./pages/CartPage";
 import OrdersPage from "./pages/OrdersPage";
 import OrdersDetailPage from "./pages/OrdersDetailPage";
 import WishlistPage from "./pages/WishlistPage"
