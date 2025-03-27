@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zaldo.goods.backend.service.KakaoAuthService;
+import zaldo.goods.backend.service.NaverAuthService;
 
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 public class OauthController {
 
     private final KakaoAuthService kakaoAuthService;
+    private final NaverAuthService naverAuthService;
 
     @PostMapping("/kakao")
     public ResponseEntity<Map<String, String>> kakaoLogin(@RequestBody Map<String, String> body) {
@@ -27,5 +29,14 @@ public class OauthController {
         String jwt = kakaoAuthService.loginWithKakaoCode(code);
         return ResponseEntity.ok(Map.of("token", jwt));
     }
+
+    @PostMapping("/naver/code")
+    public ResponseEntity<String> naverLogin(@RequestBody Map<String, String> body) {
+        String code = body.get("code");
+        String state = body.get("state");
+        String token = naverAuthService.loginWithNaverCode(code, state);
+        return ResponseEntity.ok(token);
+    }
+
 
 }

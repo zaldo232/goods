@@ -33,6 +33,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+
+        // 🔐 소셜 로그인 관련 경로는 JWT 필터 제외
+        if (path.startsWith("/api/oauth/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (header == null || !header.startsWith("Bearer ")) {
@@ -46,14 +54,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = jwtUtil.extractUsername(token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-                // ✅ 관리자 여부 확인
                 boolean isAdmin = adminRepository.findByUsername(username).isPresent();
-
                 String role = isAdmin ? "ADMIN" : "USER";
 
                 UserDetails userDetails = User.withUsername(username)
-                            .password("") // 비밀번호는 필요 없음
+                        .password("") // 비밀번호는 필요 없음
                         .roles(role)
                         .build();
 
@@ -64,7 +69,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 System.out.println("💡 JWT 필터 실행됨! 사용자: " + username + " / 역할: " + role);
-
             }
 
         } catch (ExpiredJwtException | SignatureException | MalformedJwtException e) {
@@ -75,4 +79,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
 }

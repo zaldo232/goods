@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useAuthStore } from "../store/authStore";
-import KakaoLoginButton from "../components/KakaoLoginButton"; // ✅ 추가
+import KakaoLoginButton from "../components/KakaoLoginButton";
+import NaverLoginButton from "../components/NaverLoginButton";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -72,9 +73,13 @@ const LoginPage = () => {
                     </button>
                 </form>
 
+                {/* ✅ 소셜 로그인 구역 */}
                 <div className="mt-6 border-t pt-4 text-center">
                     <p className="text-sm text-gray-500 mb-3">또는 소셜 계정으로 로그인</p>
-                    <KakaoLoginButton /> {/* ✅ 카카오 로그인 버튼 */}
+                    <div className="flex flex-col gap-2">
+                        <KakaoLoginButton />
+                        <NaverLoginButton />
+                    </div>
                 </div>
             </div>
         </div>

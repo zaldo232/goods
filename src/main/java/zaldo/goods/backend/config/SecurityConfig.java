@@ -13,8 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import zaldo.goods.backend.security.JwtAuthenticationFilter;
 import zaldo.goods.backend.repository.AdminRepository;
 
-import zaldo.goods.backend.repository.AdminRepository;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
