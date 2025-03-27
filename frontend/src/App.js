@@ -36,6 +36,7 @@ import AdminFaqsPage from './pages/AdminFaqsPage';
 import AdminFaqEditPage from './pages/AdminFaqEditPage';
 import HeaderUser from './components/HeaderUser';
 import HeaderAdmin from './components/HeaderAdmin';
+import OAuthKakaoRedirectPage from './pages/OAuthKakaoRedirectPage';
 
 function App() {
     const isAdmin = localStorage.getItem('admin_jwt');
@@ -79,6 +80,7 @@ function App() {
                         <Route path="/admin/faqs/new" element={<AdminFaqCreatePage />} />
                         <Route path="/admin/faqs" element={<AdminFaqsPage />} />
                         <Route path="/admin/faqs/:id/edit" element={<AdminFaqEditPage />} />
+                        <Route path="/oauth/kakao" element={<OAuthKakaoRedirectPage />} />
                     </Routes>
                 </div>
             </>

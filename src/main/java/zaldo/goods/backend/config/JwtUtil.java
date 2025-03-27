@@ -19,12 +19,12 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // ✅ 기본 (유저용)
+    // 기본 (유저용)
     public String generateToken(String username) {
         return generateToken(username, "USER");
     }
 
-    // ✅ 역할 포함 생성
+    //  역할 포함 생성
     public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
@@ -35,7 +35,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    // ✅ 유저명 추출
+    //  유저명 추출
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -45,7 +45,7 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    // ✅ 역할 추출
+    //  역할 추출
     public String extractRole(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())

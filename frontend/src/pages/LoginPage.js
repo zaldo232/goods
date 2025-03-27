@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/api";  // 백엔드 API 요청
-import { useAuthStore } from "../store/authStore";  // 상태 관리
+import api from "../api/api";
+import { useAuthStore } from "../store/authStore";
+import KakaoLoginButton from "../components/KakaoLoginButton"; // ✅ 추가
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const { setToken } = useAuthStore();  // JWT 저장 함수
+    const { setToken } = useAuthStore();
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [error, setError] = useState("");
 
@@ -19,11 +20,10 @@ const LoginPage = () => {
 
         try {
             const response = await api.post("/api/auth/login", formData);
-            const token = response.data;  // JWT 토큰
-
-            setToken(token);  // ✅ 토큰 저장 (상태 관리)
-            localStorage.setItem("jwt", token);  // ✅ 로컬스토리지에도 저장
-            navigate("/");  // ✅ 로그인 후 홈으로 이동
+            const token = response.data;
+            setToken(token);
+            localStorage.setItem("jwt", token);
+            navigate("/");
         } catch (err) {
             setError("로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
         }
@@ -72,6 +72,10 @@ const LoginPage = () => {
                     </button>
                 </form>
 
+                <div className="mt-6 border-t pt-4 text-center">
+                    <p className="text-sm text-gray-500 mb-3">또는 소셜 계정으로 로그인</p>
+                    <KakaoLoginButton /> {/* ✅ 카카오 로그인 버튼 */}
+                </div>
             </div>
         </div>
     );
