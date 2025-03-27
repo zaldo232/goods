@@ -24,6 +24,11 @@ import InquiryDetailPage from './pages/InquiryDetailPage';
 import InquiriesNewPage from './pages/InquiriesNewPage';
 import AdminInquiriesPage from './pages/AdminInquiriesPage';
 import AdminInquiryDetailPage from './pages/AdminInquiryDetailPage';
+import NoticesPage from './pages/NoticesPage';
+import NoticeDetailPage from './pages/NoticeDetailPage';
+import AdminNoticeCreatePage from './pages/AdminNoticeCreatePage';
+import AdminNoticesPage from './pages/AdminNoticesPage';
+import AdminNoticeEditPage from './pages/AdminNoticeEditPage';
 
 function App() {
     return (
@@ -53,6 +58,11 @@ function App() {
                 <Route path="/inquiries/:id" element={<InquiryDetailPage />} />
                 <Route path="/admin/inquiries" element={<AdminInquiriesPage />} />
                 <Route path="/admin/inquiries/:id" element={<AdminInquiryDetailPage />} />
+                <Route path="/notices" element={<NoticesPage />} />
+                <Route path="/notices/:id" element={<NoticeDetailPage />} />
+                <Route path="/admin/notices/new" element={<AdminNoticeCreatePage />} />
+                <Route path="/admin/notices" element={<AdminNoticesPage />} />
+                <Route path="/admin/notices/:id/edit" element={<AdminNoticeEditPage />} />
             </Routes>
         </Router>
     );
