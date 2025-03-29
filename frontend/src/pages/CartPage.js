@@ -64,23 +64,40 @@ const CartPage = () => {
 
     const handleOrder = async () => {
         const token = localStorage.getItem("jwt");
-        try {
-            await axios.post(
-                "http://localhost:8080/api/orders",
-                { paymentMethod }, // ✅ 선택된 결제 방식 전달
-                {
+
+        if (paymentMethod === "KAKAO_PAY") {
+            try {
+                const res = await axios.get("http://localhost:8080/api/payment/kakao", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
-                }
-            );
-            alert("주문이 완료되었습니다!");
-            window.location.href = "/";
-        } catch (err) {
-            console.error("주문 실패:", err);
-            alert("주문에 실패했습니다.");
+                });
+                window.location.href = res.data; // ✅ 카카오 결제창으로 이동
+            } catch (err) {
+                console.error("카카오페이 요청 실패:", err);
+                alert("카카오페이 요청 실패");
+            }
+        } else {
+            try {
+                await axios.post(
+                    "http://localhost:8080/api/orders",
+                    { paymentMethod },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                alert("주문이 완료되었습니다!");
+                window.location.href = "/";
+            } catch (err) {
+                console.error("주문 실패:", err);
+                alert("주문에 실패했습니다.");
+            }
         }
     };
+
+
 
     const totalPrice = cartItems.reduce(
         (sum, item) => sum + item.totalPrice,

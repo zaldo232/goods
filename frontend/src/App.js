@@ -38,6 +38,10 @@ import HeaderUser from './components/HeaderUser';
 import HeaderAdmin from './components/HeaderAdmin';
 import OAuthKakaoRedirectPage from './pages/OAuthKakaoRedirectPage';
 import OauthNaverRedirectPage from "./pages/OauthNaverRedirectPage";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFail from "./pages/PaymentFail";
+import PaymentCancel from "./pages/PaymentCancel";
 
 function App() {
     const isAdmin = localStorage.getItem('admin_jwt');
@@ -83,6 +87,9 @@ function App() {
                         <Route path="/admin/faqs/:id/edit" element={<AdminFaqEditPage />} />
                         <Route path="/oauth/kakao" element={<OAuthKakaoRedirectPage />} />
                         <Route path="/oauth/naver" element={<OauthNaverRedirectPage />} />
+                        <Route path="/payment/success" element={<PaymentSuccess />} />
+                        <Route path="/payment/fail" element={<PaymentFail />} />
+                        <Route path="/payment/cancel" element={<PaymentCancel />} />
                     </Routes>
                 </div>
             </>
