@@ -25,17 +25,17 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final FileStorageService fileStorageService;
 
-    // ✅ 상품 전체 목록 조회
+    // 상품 전체 목록 조회
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    // ✅ 상품 ID로 조회
+    // 상품 ID로 조회
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 
-    // ✅ 상품 + 이미지 등록
+    // 상품 + 이미지 등록
     public void createProductWithImages(ProductCreateRequest request, List<MultipartFile> images) throws Exception {
         // 1. 카테고리 조회
         Category category = categoryRepository.findById(request.getCategoryId())

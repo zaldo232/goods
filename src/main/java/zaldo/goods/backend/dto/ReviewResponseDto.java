@@ -19,7 +19,7 @@ public class ReviewResponseDto {
 
     public static ReviewResponseDto fromEntity(Review review) {
         return ReviewResponseDto.builder()
-                .reviewId(review.getReviewId()) // <-- 꼭 추가
+                .reviewId(review.getReviewId())
                 .username(review.getUser().getUsername())
                 .rating(review.getRating())
                 .content(review.getContent())

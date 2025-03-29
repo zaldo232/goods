@@ -25,7 +25,7 @@ const AdminInquiriesPage = () => {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">📋 전체 문의 목록</h2>
+            <h2 className="text-xl font-bold mb-4">전체 문의 목록</h2>
             {inquiries.length === 0 ? (
                 <p>문의가 없습니다.</p>
             ) : (

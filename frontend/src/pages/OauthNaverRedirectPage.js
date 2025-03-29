@@ -13,7 +13,7 @@ const OAuthNaverRedirectPage = () => {
         const state = urlParams.get("state");
 
         if (code && state) {
-            // ✅ 인증 헤더 제거
+            // 인증 헤더 제거
             delete axios.defaults.headers.common["Authorization"];
 
             axios

@@ -27,7 +27,7 @@ const AdminProductEditPage = () => {
                 setForm({ name, description, price, stock });
             })
             .catch((err) => {
-                console.error("❌ 상품 조회 실패:", err);
+                console.error("상품 조회 실패:", err);
                 alert("상품 정보를 불러올 수 없습니다.");
             });
     }, [id]);
@@ -58,7 +58,7 @@ const AdminProductEditPage = () => {
             alert("상품이 수정되었습니다!");
             navigate("/admin/products");
         } catch (err) {
-            console.error("❌ 상품 수정 실패:", err);
+            console.error("상품 수정 실패:", err);
             alert("수정에 실패했습니다.");
         }
     };

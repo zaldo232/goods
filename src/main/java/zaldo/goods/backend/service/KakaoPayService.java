@@ -16,7 +16,7 @@ public class KakaoPayService {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final RestTemplate restTemplate = new RestTemplate();
 
-    // 🔑 테스트용 Admin Key
+    // 테스트용 Admin Key
     private static final String ADMIN_KEY = "KakaoAK 0e21f1ae63954ace24e759251dd85e39";
     private static final String CID = "TC0ONETIME"; // 테스트 전용 CID
 
@@ -49,7 +49,7 @@ public class KakaoPayService {
             );
 
             JsonNode json = objectMapper.readTree(response.getBody());
-            return json.get("next_redirect_pc_url").asText(); // ✅ 프론트에서 이동할 URL
+            return json.get("next_redirect_pc_url").asText(); // 프론트에서 이동할 URL
 
         } catch (Exception e) {
             throw new RuntimeException("카카오페이 요청 실패", e);

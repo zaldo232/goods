@@ -27,7 +27,7 @@ const NoticeDetailPage = () => {
             <div className="whitespace-pre-wrap">{notice.content}</div>
 
             <Link to="/notices" className="block mt-6 text-blue-600 underline">
-                ← 공지사항 목록으로 돌아가기
+                 공지사항 목록으로 돌아가기
             </Link>
         </div>
     );

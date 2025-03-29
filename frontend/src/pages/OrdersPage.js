@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"; // ✅ 추가
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
-  const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -47,7 +47,7 @@ const OrdersPage = () => {
                   >
                     <h3
                         style={{ color: "#007bff", cursor: "pointer" }}
-                        onClick={() => goToOrderDetail(order.orderId)} // ✅ 클릭 시 이동
+                        onClick={() => goToOrderDetail(order.orderId)} // 클릭 시 이동
                     >
                       주문 번호: #{order.orderId}
                     </h3>

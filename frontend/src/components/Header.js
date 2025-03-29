@@ -14,7 +14,7 @@ const Header = () => {
 
     return (
         <header className="bg-white border-b shadow-sm px-6 py-3 flex justify-between items-center">
-            <Link to="/" className="text-xl font-bold text-blue-600">🛍 굿즈몰</Link>
+            <Link to="/" className="text-xl font-bold text-blue-600">굿즈몰</Link>
 
             <nav className="flex gap-4 text-sm text-gray-700">
                 <Link to="/products">상품</Link>

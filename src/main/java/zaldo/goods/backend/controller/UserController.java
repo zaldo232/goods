@@ -20,7 +20,7 @@ public class UserController {
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    // ✅ 1. 로그인된 사용자 정보 조회
+    // 1. 로그인된 사용자 정보 조회
     @GetMapping("/me")
     public ResponseEntity<?> getUserInfo(@RequestHeader("Authorization") String token) {
         String jwt = token.substring(7);
@@ -34,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(user.get());
     }
 
-    // ✅ 2. 비밀번호 변경
+    // 2. 비밀번호 변경
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String token,
                                             @RequestBody ChangePasswordRequest request) {

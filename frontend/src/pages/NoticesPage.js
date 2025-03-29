@@ -19,7 +19,7 @@ const NoticesPage = () => {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">📢 공지사항</h2>
+            <h2 className="text-xl font-bold mb-4">공지사항</h2>
             {notices.length === 0 ? (
                 <p>등록된 공지사항이 없습니다.</p>
             ) : (

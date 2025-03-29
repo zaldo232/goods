@@ -5,9 +5,9 @@ const AdminHomePage = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("admin_jwt"); // ✅ 토큰 제거
+        localStorage.removeItem("admin_jwt"); // 토큰 제거
         alert("로그아웃 되었습니다.");
-        navigate("/admin/login"); // ✅ 로그인 페이지로 이동
+        navigate("/admin/login"); // 로그인 페이지로 이동
     };
 
     return (

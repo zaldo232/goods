@@ -43,11 +43,11 @@ const AdminInquiryDetailPage = () => {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-2">📨 문의 상세</h2>
+            <h2 className="text-xl font-bold mb-2">문의 상세</h2>
             <p className="font-semibold mb-1">제목: {inquiry.title}</p>
             <p className="whitespace-pre-wrap mb-4">내용: {inquiry.content}</p>
 
-            <h3 className="text-lg font-semibold mt-6">💬 관리자 답변</h3>
+            <h3 className="text-lg font-semibold mt-6">관리자 답변</h3>
             {inquiry.status === 'ANSWERED' ? (
                 <p className="mt-2 whitespace-pre-wrap text-gray-700">{inquiry.response}</p>
             ) : (

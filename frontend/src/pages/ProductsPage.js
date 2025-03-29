@@ -13,12 +13,12 @@ const ProductsPage = () => {
                 if (Array.isArray(res.data)) {
                     setProducts(res.data);
                 } else {
-                    console.error("❗ 서버 응답이 배열이 아닙니다:", res.data);
+                    console.error("서버 응답이 배열이 아닙니다:", res.data);
                     setProducts([]);
                 }
             })
             .catch((err) => {
-                console.error("❌ 상품 불러오기 실패:", err);
+                console.error("상품 불러오기 실패:", err);
                 setProducts([]);
             })
             .finally(() => {
@@ -26,7 +26,7 @@ const ProductsPage = () => {
             });
     }, []);
 
-    if (loading) return <div className="p-8">⏳ 로딩 중...</div>;
+    if (loading) return <div className="p-8">로딩 중.</div>;
 
     return (
         <div className="p-8 bg-gray-100 min-h-screen">
@@ -41,7 +41,7 @@ const ProductsPage = () => {
                             key={product.productId}
                             className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition"
                         >
-                            {/* ✅ 이미지 표시 */}
+                            {/* 이미지 표시 */}
                             {product.images.length > 0 && (
                                 <img
                                     src={`http://localhost:8080${product.images[0].imageUrl}`}

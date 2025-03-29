@@ -10,10 +10,10 @@ const AdminProductAddPage = () => {
         description: "",
         price: "",
         stock: "",
-        categoryId: "", // 🔥 카테고리 ID 저장
+        categoryId: "",
     });
     const [images, setImages] = useState([]);
-    const [categories, setCategories] = useState([]); // 🔥 카테고리 목록 저장
+    const [categories, setCategories] = useState([]);
 
     const token = localStorage.getItem("admin_jwt");
 
@@ -23,7 +23,7 @@ const AdminProductAddPage = () => {
             .get("http://localhost:8080/api/categories")
             .then((res) => setCategories(res.data))
             .catch((err) => {
-                console.error("❌ 카테고리 불러오기 실패:", err);
+                console.error("카테고리 불러오기 실패:", err);
                 alert("카테고리 목록을 불러올 수 없습니다.");
             });
     }, []);
@@ -56,7 +56,7 @@ const AdminProductAddPage = () => {
             alert("상품이 등록되었습니다!");
             navigate("/admin/products");
         } catch (err) {
-            console.error("❌ 상품 등록 실패:", err);
+            console.error("상품 등록 실패:", err);
             alert("상품 등록에 실패했습니다.");
         }
     };
@@ -70,7 +70,7 @@ const AdminProductAddPage = () => {
                 <input name="price" value={form.price} onChange={handleChange} placeholder="가격" type="number" className="w-full p-2 border" />
                 <input name="stock" value={form.stock} onChange={handleChange} placeholder="재고" type="number" className="w-full p-2 border" />
 
-                {/* ✅ 카테고리 드롭다운 */}
+                {/* 카테고리 드롭다운 */}
                 <select
                     name="categoryId"
                     value={form.categoryId}

@@ -44,7 +44,7 @@ const AdminNoticeEditPage = () => {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">✏️ 공지사항 수정</h2>
+            <h2 className="text-xl font-bold mb-4">공지사항 수정</h2>
             <form onSubmit={handleUpdate}>
                 <input
                     className="border w-full p-2 mb-2"

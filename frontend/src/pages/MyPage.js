@@ -39,13 +39,13 @@ const MyPage = () => {
                 newPassword: newPw,
             });
 
-            setMessage("✅ 비밀번호 변경 완료!");
+            setMessage("비밀번호 변경 완료!");
             setCurrentPw("");
             setNewPw("");
             setShowChangePw(false);
         } catch (err) {
             console.error(err);
-            setMessage("❌ 비밀번호 변경 실패: 현재 비밀번호를 확인하세요.");
+            setMessage("비밀번호 변경 실패: 현재 비밀번호를 확인하세요.");
         }
     };
 
@@ -71,13 +71,13 @@ const MyPage = () => {
             <div className="bg-white p-8 rounded-lg shadow-md w-96">
                 <h2 className="text-2xl font-bold mb-4 text-center">마이페이지</h2>
 
-                {/* ✅ 메시지 표시 영역 */}
+                {/*  메시지 표시 영역 */}
                 {message && (
                     <div
                         className="p-2 mb-4 rounded text-center font-semibold"
                         style={{
-                            backgroundColor: message.startsWith("✅") ? "#e0f7e9" : "#fdecea",
-                            color: message.startsWith("✅") ? "#2e7d32" : "#c62828",
+                            backgroundColor: message.startsWith("") ? "#e0f7e9" : "#fdecea",
+                            color: message.startsWith("") ? "#2e7d32" : "#c62828",
                         }}
                     >
                         {message}

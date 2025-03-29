@@ -34,7 +34,7 @@ const InquiryDetailPage = () => {
             <p className="mb-4 text-gray-700 whitespace-pre-wrap">{inquiry.content}</p>
 
             <div className="border-t pt-4 mt-4">
-                <h3 className="text-lg font-semibold">📩 관리자 답변</h3>
+                <h3 className="text-lg font-semibold">관리자 답변</h3>
                 {inquiry.status === 'ANSWERED' ? (
                     <p className="mt-2 whitespace-pre-wrap">{inquiry.response}</p>
                 ) : (
@@ -43,7 +43,7 @@ const InquiryDetailPage = () => {
             </div>
 
             <Link to="/inquiries" className="block mt-6 text-blue-600 underline">
-                ← 문의 목록으로 돌아가기
+                문의 목록으로 돌아가기
             </Link>
         </div>
     );

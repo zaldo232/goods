@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdminLoginPage = () => {
     const [form, setForm] = useState({ username: "", password: "" });
-    const navigate = useNavigate(); // ✅ 추가
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,7 +16,7 @@ const AdminLoginPage = () => {
             const res = await axios.post("http://localhost:8080/api/admin/login", form);
             localStorage.setItem("admin_jwt", res.data);
             alert("관리자 로그인 성공!");
-            navigate("/admin/home"); // ✅ 로그인 후 이동
+            navigate("/admin/home"); // 로그인 후 이동
         } catch (err) {
             alert(err.response?.data || "로그인 실패");
         }

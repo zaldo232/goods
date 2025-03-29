@@ -18,7 +18,7 @@ const FaqPage = () => {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">📘 자주 묻는 질문 (FAQ)</h2>
+            <h2 className="text-xl font-bold mb-4">자주 묻는 질문 (FAQ)</h2>
             {faqs.length === 0 ? (
                 <p>등록된 FAQ가 없습니다.</p>
             ) : (

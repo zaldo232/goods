@@ -73,7 +73,7 @@ const LoginPage = () => {
                     </button>
                 </form>
 
-                {/* ✅ 소셜 로그인 구역 */}
+                {/* 소셜 로그인 구역 */}
                 <div className="mt-6 border-t pt-4 text-center">
                     <p className="text-sm text-gray-500 mb-3">또는 소셜 계정으로 로그인</p>
                     <div className="flex flex-col gap-2">

@@ -6,7 +6,7 @@ const PaymentFail = () => {
 
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-red-50">
-            <h1 className="text-3xl font-bold text-red-600 mb-4">결제 실패 ❌</h1>
+            <h1 className="text-3xl font-bold text-red-600 mb-4">결제 실패</h1>
             <p className="text-gray-700">결제 중 오류가 발생했습니다.</p>
             <button
                 onClick={() => navigate("/cart")}

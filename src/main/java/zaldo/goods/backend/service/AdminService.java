@@ -14,7 +14,7 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;  // ✅ 추가!
+    private final JwtUtil jwtUtil;
 
     public void signup(AdminSignupRequest request) {
         // 중복 체크 (username, email)
@@ -42,7 +42,7 @@ public class AdminService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        // ✅ JWT 토큰 발급
+        // JWT 토큰 발급
         return jwtUtil.generateToken(admin.getUsername());
     }
 

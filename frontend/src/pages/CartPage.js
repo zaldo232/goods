@@ -3,7 +3,7 @@ import axios from "axios";
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState([]);
-    const [paymentMethod, setPaymentMethod] = useState("CARD"); // ✅ 추가
+    const [paymentMethod, setPaymentMethod] = useState("CARD");
 
     const fetchCart = async () => {
         const token = localStorage.getItem("jwt");
@@ -72,7 +72,7 @@ const CartPage = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                window.location.href = res.data; // ✅ 카카오 결제창으로 이동
+                window.location.href = res.data; //카카오 결제창으로 이동
             } catch (err) {
                 console.error("카카오페이 요청 실패:", err);
                 alert("카카오페이 요청 실패");
@@ -164,7 +164,7 @@ const CartPage = () => {
                     <hr />
                     <h3>🧾 총 결제 금액: {totalPrice.toLocaleString()}원</h3>
 
-                    {/* ✅ 결제 방식 선택 */}
+                    {/* 결제 방식 선택 */}
                     <div style={{ marginTop: "20px" }}>
                         <label style={{ marginRight: "10px" }}>결제 방식:</label>
                         <select
@@ -192,7 +192,7 @@ const CartPage = () => {
                             cursor: "pointer",
                         }}
                     >
-                        🛍 주문하기
+                        주문하기
                     </button>
                 </>
             )}

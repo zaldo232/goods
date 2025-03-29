@@ -38,7 +38,7 @@ const AdminFaqsPage = () => {
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">📘 FAQ 관리</h2>
+                <h2 className="text-xl font-bold">FAQ 관리</h2>
                 <Link to="/admin/faqs/new" className="bg-green-600 text-white px-4 py-2 rounded">
                     + 새 FAQ
                 </Link>

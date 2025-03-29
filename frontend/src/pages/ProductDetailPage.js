@@ -204,7 +204,7 @@ const ProductDetailPage = () => {
 
     return (
         <div style={{ padding: "20px" }}>
-            {/* ✅ 이미지 표시 */}
+            {/* 이미지 표시 */}
             {product.images && product.images.length > 0 && (
                 <div style={{ marginBottom: "20px", display: "flex", flexWrap: "wrap", gap: "10px" }}>
                     {product.images.map((image, index) => (
@@ -234,7 +234,7 @@ const ProductDetailPage = () => {
             </button>
 
             <hr />
-            <h3>📝 리뷰</h3>
+            <h3>리뷰</h3>
 
             {averageRating && (
                 <div style={{ marginBottom: "10px", fontWeight: "bold" }}>

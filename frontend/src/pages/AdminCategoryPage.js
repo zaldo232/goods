@@ -15,7 +15,7 @@ const AdminCategoryPage = () => {
             });
             setCategories(res.data);
         } catch (err) {
-            console.error("❌ 카테고리 목록 불러오기 실패:", err);
+            console.error("카테고리 목록 불러오기 실패:", err);
             alert("카테고리 목록을 불러올 수 없습니다.");
         }
     };
@@ -31,7 +31,7 @@ const AdminCategoryPage = () => {
             setNewCategory("");
             fetchCategories();
         } catch (err) {
-            console.error("❌ 카테고리 등록 실패:", err);
+            console.error("카테고리 등록 실패:", err);
             alert("카테고리 등록 실패");
         }
     };
@@ -44,7 +44,7 @@ const AdminCategoryPage = () => {
             });
             fetchCategories();
         } catch (err) {
-            console.error("❌ 카테고리 삭제 실패:", err);
+            console.error("카테고리 삭제 실패:", err);
             alert("카테고리 삭제 실패");
         }
     };
@@ -55,7 +55,7 @@ const AdminCategoryPage = () => {
 
     return (
         <div className="p-8">
-            <h2 className="text-2xl font-bold mb-4">📁 카테고리 관리</h2>
+            <h2 className="text-2xl font-bold mb-4">카테고리 관리</h2>
 
             <div className="flex gap-2 mb-6">
                 <input

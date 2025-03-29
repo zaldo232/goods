@@ -38,7 +38,7 @@ const HomePage = () => {
                     <p className="text-gray-500">로딩 중...</p>
                 ) : token ? (
                     <>
-                        <p className="text-green-500">로그인 성공! ✅</p>
+                        <p className="text-green-500">로그인 성공!</p>
                         {error && <p className="text-red-500">{error}</p>}
                         {userInfo ? (
                             <div className="mt-4">

@@ -21,7 +21,7 @@ public class ProductImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonIgnore  // 또는 @JsonBackReference
+    @JsonIgnore
     private Product product;
 
 

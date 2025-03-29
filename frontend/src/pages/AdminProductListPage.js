@@ -17,7 +17,7 @@ const AdminProductListPage = () => {
             });
             setProducts(res.data);
         } catch (err) {
-            console.error("❌ 상품 목록 조회 실패:", err);
+            console.error("상품 목록 조회 실패:", err);
             alert("상품 목록을 불러오지 못했습니다.");
         }
     };
@@ -32,7 +32,7 @@ const AdminProductListPage = () => {
             alert("삭제 완료!");
             fetchProducts();
         } catch (err) {
-            console.error("❌ 삭제 실패:", err);
+            console.error("삭제 실패:", err);
             alert("삭제에 실패했습니다.");
         }
     };
@@ -43,7 +43,7 @@ const AdminProductListPage = () => {
 
     return (
         <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4">📦 상품 관리</h2>
+            <h2 className="text-2xl font-bold mb-4">상품 관리</h2>
             <table className="w-full border">
                 <thead>
                 <tr className="bg-gray-200">

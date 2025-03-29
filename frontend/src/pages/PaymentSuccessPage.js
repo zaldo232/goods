@@ -21,11 +21,11 @@ const PaymentSuccessPage = () => {
                     }
                 });
 
-                console.log("✅ 결제 승인 성공", response.data);
+                console.log("결제 승인 성공", response.data);
                 alert("결제가 완료되었습니다!");
                 // 여기서 주문 상태 변경 or 주문 완료 페이지 이동
             } catch (err) {
-                console.error("❌ 결제 승인 실패", err);
+                console.error("결제 승인 실패", err);
                 alert("결제 승인에 실패했습니다.");
             }
         };

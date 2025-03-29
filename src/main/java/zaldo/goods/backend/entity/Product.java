@@ -36,7 +36,7 @@ public class Product {
     @Column(nullable = false)
     private int stock;
 
-    // 🔗 카테고리 연결 (N:1)
+    //카테고리 연결 (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

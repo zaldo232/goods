@@ -1,7 +1,7 @@
 // src/pages/AdminOrdersPage.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"; // ✅ 링크 추가
+import { Link } from "react-router-dom";
 
 const AdminOrdersPage = () => {
     const [orders, setOrders] = useState([]);
@@ -23,7 +23,7 @@ const AdminOrdersPage = () => {
                 setEditStatus(statusMap);
             })
             .catch(err => {
-                console.error("❌ 주문 목록 불러오기 실패:", err);
+                console.error("주문 목록 불러오기 실패:", err);
                 alert("주문 정보를 불러오지 못했습니다.");
             });
     }, []);
@@ -41,7 +41,7 @@ const AdminOrdersPage = () => {
             );
             alert("주문 상태가 변경되었습니다.");
         } catch (err) {
-            console.error("❌ 상태 변경 실패:", err);
+            console.error("상태 변경 실패:", err);
             alert("상태 변경에 실패했습니다.");
         }
     };
@@ -50,7 +50,7 @@ const AdminOrdersPage = () => {
 
     return (
         <div className="p-8">
-            <h2 className="text-2xl font-bold mb-4">🧾 주문 목록</h2>
+            <h2 className="text-2xl font-bold mb-4">주문 목록</h2>
             <table className="table-auto w-full">
                 <thead>
                 <tr className="bg-gray-100">

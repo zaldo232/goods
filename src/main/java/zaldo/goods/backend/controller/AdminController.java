@@ -24,7 +24,7 @@ public class AdminController {
     private final ProductService productService;
     private final OrderService orderService;
 
-    // ✅ 관리자 회원가입
+    //관리자 회원가입
     @PostMapping("/signup")
     public ResponseEntity<?> registerAdmin(@RequestBody AdminSignupRequest request) {
         try {
@@ -45,14 +45,14 @@ public class AdminController {
         }
     }
 
-    // 🔍 관리자 상품 목록 조회
+    // 관리자 상품 목록 조회
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProductsForAdmin() {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
     }
 
-    // 📁 AdminController.java (하단에 추가)
+
     @PutMapping("/products/{id}")
     public ResponseEntity<String> updateProduct(
             @PathVariable Long id,

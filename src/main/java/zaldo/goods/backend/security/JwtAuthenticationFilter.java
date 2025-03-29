@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // 🔐 소셜 로그인 관련 경로는 JWT 필터 제외
+        // 소셜 로그인 관련 경로는 JWT 필터 제외
         if (path.startsWith("/api/oauth/")) {
             filterChain.doFilter(request, response);
             return;
@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                System.out.println("💡 JWT 필터 실행됨! 사용자: " + username + " / 역할: " + role);
+                System.out.println("JWT 필터 실행됨! 사용자: " + username + " / 역할: " + role);
             }
 
         } catch (ExpiredJwtException | SignatureException | MalformedJwtException e) {

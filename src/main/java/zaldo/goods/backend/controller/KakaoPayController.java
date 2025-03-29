@@ -13,6 +13,6 @@ public class KakaoPayController {
 
     @GetMapping("/kakao")
     public String requestPay() {
-        return kakaoPayService.requestPay(); // ✅ URL 리턴
+        return kakaoPayService.requestPay();
     }
 }
