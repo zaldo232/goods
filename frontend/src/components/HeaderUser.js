@@ -5,11 +5,6 @@ const HeaderUser = () => {
     const token = localStorage.getItem('jwt');
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        localStorage.removeItem('jwt');
-        navigate('/');
-    };
-
     return (
         <header className="bg-white border-b shadow-sm px-6 py-3 flex justify-between items-center">
             <Link to="/" className="text-xl font-bold text-blue-600">굿즈몰</Link>
@@ -28,7 +23,6 @@ const HeaderUser = () => {
                 {token ? (
                     <>
                         <Link to="/mypage" className="mr-4 text-blue-600 font-semibold">마이페이지</Link>
-                        <button onClick={handleLogout} className="text-red-500 font-semibold">로그아웃</button>
                     </>
                 ) : (
                     <Link to="/login" className="text-blue-600 font-semibold">로그인</Link>

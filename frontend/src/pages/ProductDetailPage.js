@@ -71,6 +71,22 @@ const ProductDetailPage = () => {
         checkWishlist();
     }, [id]);
 
+    useEffect(() => {
+        if (!product) return;
+
+        const viewed = JSON.parse(localStorage.getItem("recentProducts")) || [];
+        const filtered = viewed.filter((item) => item.id !== product.productId);
+        const updated = [
+            {
+                id: product.productId,
+                name: product.name,
+                image: product.images?.[0]?.imageUrl || "",
+            },
+            ...filtered,
+        ];
+        localStorage.setItem("recentProducts", JSON.stringify(updated.slice(0, 10)));
+    }, [product]);
+
     const handleAddToCart = async () => {
         const token = localStorage.getItem("jwt");
         try {
@@ -204,7 +220,6 @@ const ProductDetailPage = () => {
 
     return (
         <div style={{ padding: "20px" }}>
-            {/* 이미지 표시 */}
             {product.images && product.images.length > 0 && (
                 <div style={{ marginBottom: "20px", display: "flex", flexWrap: "wrap", gap: "10px" }}>
                     {product.images.map((image, index) => (
