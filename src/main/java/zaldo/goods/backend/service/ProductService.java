@@ -25,6 +25,16 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final FileStorageService fileStorageService;
 
+    // 추천 상품 조회
+    public List<Product> getRecommendedProducts() {
+        return productRepository.findByIsRecommendedTrue();
+    }
+
+    // 베스트 셀러 조회
+    public List<Product> getBestSellers() {
+        return productRepository.findTopBestSellers();
+    }
+
     // 상품 전체 목록 조회
     public List<Product> getAllProducts() {
         return productRepository.findAll();

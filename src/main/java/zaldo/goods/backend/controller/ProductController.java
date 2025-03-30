@@ -18,7 +18,19 @@ public class ProductController {
 
     private final ProductService productService;
 
-    // 🔍 상품 전체 조회 API
+    // 추천 상품 API
+    @GetMapping("/recommended")
+    public ResponseEntity<List<Product>> getRecommendedProducts() {
+        return ResponseEntity.ok(productService.getRecommendedProducts());
+    }
+
+    // 베스트 셀러 API
+    @GetMapping("/best-sellers")
+    public ResponseEntity<List<Product>> getBestSellers() {
+        return ResponseEntity.ok(productService.getBestSellers());
+    }
+
+    // 상품 전체 조회 API
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();

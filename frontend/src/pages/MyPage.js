@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import RecentProducts from "../components/RecentProducts";
 
 const MyPage = () => {
     const { token, logout } = useAuthStore();
@@ -133,6 +134,8 @@ const MyPage = () => {
                     </div>
                 )}
             </div>
+            {/* 최근 본 상품 표시 */}
+            <RecentProducts />
         </div>
     );
 };
