@@ -131,5 +131,18 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public List<Product> searchProducts(String keyword, Long categoryId) {
+        if (keyword != null && categoryId != null) {
+            return productRepository.findByNameContainingAndCategory_CategoryId(keyword, categoryId);
+        } else if (keyword != null) {
+            return productRepository.findByNameContaining(keyword);
+        } else if (categoryId != null) {
+            return productRepository.findByCategory_CategoryId(categoryId);
+        } else {
+            return productRepository.findAll();
+        }
+    }
+
+
 
 }

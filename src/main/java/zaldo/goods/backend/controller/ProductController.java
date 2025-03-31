@@ -61,5 +61,13 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/search")
+    public List<Product> searchProducts(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Long categoryId
+    ) {
+        return productService.searchProducts(keyword, categoryId);
+    }
+
 
 }
