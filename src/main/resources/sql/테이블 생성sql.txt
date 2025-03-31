@@ -1,0 +1,142 @@
+ERD 다이어그램 개념
+주요 관계
+User ↔ Cart (1:N) → 한 명의 사용자는 여러 개의 장바구니 상품을 가질 수 있음
+User ↔ Order (1:N) → 한 명의 사용자는 여러 개의 주문을 할 수 있음
+Order ↔ Order_Item (1:N) → 한 개의 주문은 여러 개의 상품을 포함 가능
+Product ↔ Review (1:N) → 하나의 상품에는 여러 개의 리뷰가 있을 수 있음
+
+사용자테이블
+CREATE TABLE users (
+                       user_id         BIGINT AUTO_INCREMENT PRIMARY KEY, -- 사용자 키 (PK)
+                       username        VARCHAR(50) UNIQUE NOT NULL,       -- 사용자 아이디
+                       password        VARCHAR(255) NOT NULL,             -- 비밀번호 (해싱 저장)
+                       email           VARCHAR(100) UNIQUE NOT NULL,      -- 이메일
+                       phone_number    VARCHAR(20),                       -- 전화번호
+                       social_type     ENUM('NONE', 'KAKAO', 'NAVER'),    -- 소셜 로그인 여부
+                       created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                       updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+상품테이블
+CREATE TABLE products (
+                          product_id      BIGINT AUTO_INCREMENT PRIMARY KEY, -- 상품 키 (PK)
+                          name            VARCHAR(100) NOT NULL,             -- 상품명
+                          description     TEXT,                              -- 상품 설명
+                          price           DECIMAL(10,2) NOT NULL,           -- 가격
+                          stock          INT NOT NULL,                      -- 재고 수량
+                          category_id     BIGINT,                           -- 상품 카테고리
+                          created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                          FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE SET NULL
+);
+
+상품 카테고리 테이블
+CREATE TABLE categories (
+                            category_id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            category_name VARCHAR(50) UNIQUE NOT NULL
+);
+
+장바구니 테이블
+CREATE TABLE cart (
+                      cart_id      BIGINT AUTO_INCREMENT PRIMARY KEY,
+                      user_id      BIGINT NOT NULL,                   -- 사용자 ID
+                      product_id   BIGINT NOT NULL,                   -- 상품 ID
+                      quantity     INT NOT NULL DEFAULT 1,            -- 수량
+                      created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                      FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+                      FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+주문 테이블
+CREATE TABLE orders (
+                        order_id       BIGINT AUTO_INCREMENT PRIMARY KEY,
+                        user_id        BIGINT NOT NULL,                  -- 사용자 ID
+                        total_price    DECIMAL(10,2) NOT NULL,           -- 총 가격
+                        status         ENUM('PENDING', 'CONFIRMED', 'CANCELLED', 'SHIPPED', 'DELIVERED') DEFAULT 'PENDING', -- 주문 상태
+                        payment_method ENUM('CARD', 'BANK_TRANSFER', 'KAKAO_PAY', 'NAVER_PAY') NOT NULL, -- 결제 방식
+                        created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                        FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+주문 상세 테이블
+CREATE TABLE order_items (
+                             order_item_id  BIGINT AUTO_INCREMENT PRIMARY KEY,
+                             order_id       BIGINT NOT NULL,       -- 주문 ID
+                             product_id     BIGINT NOT NULL,       -- 상품 ID
+                             quantity       INT NOT NULL,          -- 수량
+                             price          DECIMAL(10,2) NOT NULL, -- 개별 상품 가격
+                             FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+                             FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+리뷰 테이블
+CREATE TABLE reviews (
+                         review_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+                         user_id       BIGINT NOT NULL,             -- 사용자 ID
+                         product_id    BIGINT NOT NULL,             -- 상품 ID
+                         rating        INT CHECK (rating BETWEEN 1 AND 5), -- 별점 (1~5)
+                         content       TEXT,                         -- 리뷰 내용
+                         created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                         FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+                         FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+위시리스트 테이블
+CREATE TABLE wishlist (
+                          wishlist_id  BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          user_id      BIGINT NOT NULL,
+                          product_id   BIGINT NOT NULL,
+                          created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+                          FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+1:1문의 테이블
+CREATE TABLE inquiries (
+                           inquiry_id    BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           user_id       BIGINT NOT NULL,         -- 문의한 사용자 ID
+                           title         VARCHAR(255) NOT NULL,   -- 제목
+                           content       TEXT NOT NULL,           -- 문의 내용
+                           response      TEXT,                     -- 관리자 답변
+                           status        ENUM('PENDING', 'ANSWERED') DEFAULT 'PENDING',
+                           created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                           updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                           FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+관리자 테이블
+CREATE TABLE admins (
+                        admin_id      BIGINT AUTO_INCREMENT PRIMARY KEY,
+                        username      VARCHAR(50) UNIQUE NOT NULL,
+                        password      VARCHAR(255) NOT NULL,
+                        email         VARCHAR(100) UNIQUE NOT NULL,
+                        created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+상품 이미지
+CREATE TABLE product_images (
+                                image_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                product_id BIGINT NOT NULL,
+                                image_url VARCHAR(255) NOT NULL,
+                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+공지사항
+CREATE TABLE notices (
+                         notice_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+                         title         VARCHAR(255) NOT NULL,
+                         content       TEXT NOT NULL,
+                         created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                         updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+faq
+CREATE TABLE faqs (
+                      faq_id       BIGINT AUTO_INCREMENT PRIMARY KEY,
+                      question     VARCHAR(255) NOT NULL,
+                      answer       TEXT NOT NULL,
+                      created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                      updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
