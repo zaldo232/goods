@@ -11,7 +11,7 @@ IDE-IntelliJ<br>
 DB-MySQL<br>
 기타-OAuth2 (카카오, 네이버), 카카오페이 API, Postman 등<br> 
 
-<h2>What I Learned — 기술 스택과 성장 경험</h2>
+<h2>기술 스택과 성장 경험</h2>
 
 <h3>백엔드 (Spring Boot)</h3>
 
